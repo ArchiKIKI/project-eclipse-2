@@ -1,14 +1,12 @@
 """
 Приём заявок на 3D-печать деталей и выезд на 3D-сканирование.
-Сохраняет заявку в БД, загружает файл модели в S3 (если есть) и отправляет уведомления на email и в Telegram.
+Сохраняет заявку в БД, загружает файл модели в S3 (если есть) и отправляет уведомление на email.
 """
 import json
 import os
 import base64
 import uuid
 import smtplib
-import urllib.request
-import urllib.parse
 from email.mime.text import MIMEText
 from email.header import Header
 import psycopg2
@@ -16,7 +14,6 @@ import boto3
 
 SMTP_LOGIN_EMAIL = "csiperm@yandex.ru"
 NOTIFY_EMAIL = "Maratam.zag@yandex.ru"
-NOTIFY_TELEGRAM = "@Testusers21231"
 
 
 def get_conn():
@@ -37,23 +34,10 @@ def upload_file_to_s3(file_base64: str, file_name: str) -> str:
     return f"https://cdn.poehali.dev/projects/{os.environ['AWS_ACCESS_KEY_ID']}/bucket/{key}"
 
 
-def send_telegram(text: str) -> None:
-    token = os.environ.get("TELEGRAM_BOT_TOKEN")
-    chat_id = os.environ.get("TELEGRAM_CHAT_ID")
-    if not token or not chat_id:
-        return
-    url = f"https://api.telegram.org/bot{token}/sendMessage"
-    data = urllib.parse.urlencode({"chat_id": chat_id, "text": text, "parse_mode": "HTML"}).encode()
-    req = urllib.request.Request(url, data=data)
-    try:
-        urllib.request.urlopen(req, timeout=10)
-    except Exception:
-        pass
-
-
 def send_email(subject: str, body: str) -> None:
     password = os.environ.get("YANDEX_SMTP_PASSWORD")
     if not password:
+        print("YANDEX_SMTP_PASSWORD не задан, письмо не отправлено")
         return
     msg = MIMEText(body, "plain", "utf-8")
     msg["Subject"] = Header(subject, "utf-8")
@@ -63,8 +47,9 @@ def send_email(subject: str, body: str) -> None:
         with smtplib.SMTP_SSL("smtp.yandex.ru", 465, timeout=10) as server:
             server.login(SMTP_LOGIN_EMAIL, password)
             server.sendmail(SMTP_LOGIN_EMAIL, [NOTIFY_EMAIL], msg.as_string())
-    except Exception:
-        pass
+        print(f"Письмо успешно отправлено на {NOTIFY_EMAIL}")
+    except Exception as e:
+        print(f"Ошибка отправки письма: {e}")
 
 
 def handler(event: dict, context) -> dict:
@@ -157,12 +142,11 @@ def handler(event: dict, context) -> dict:
         conn.close()
 
         notify_text = (
-            f"🖨 Новая заявка на 3D-печать #{order_id}\n"
+            f"Новая заявка на 3D-печать #{order_id}\n"
             f"Имя: {name}\nТелефон: {phone}\nEmail: {email}\n"
             f"Материал: {material}\nЦвет: {color}\nКоличество: {quantity}\n"
             f"Файл: {file_url or 'не приложен'}\nКомментарий: {comment}"
         )
-        send_telegram(notify_text)
         send_email(f"Новая заявка на 3D-печать #{order_id}", notify_text)
 
         return {"statusCode": 200, "headers": headers, "body": json.dumps({"success": True, "id": order_id})}
@@ -186,11 +170,10 @@ def handler(event: dict, context) -> dict:
         conn.close()
 
         notify_text = (
-            f"📡 Новая заявка на выезд 3D-сканирования #{order_id}\n"
+            f"Новая заявка на выезд 3D-сканирования #{order_id}\n"
             f"Имя: {name}\nТелефон: {phone}\nEmail: {email}\n"
             f"Адрес: {address}\nЖелаемая дата: {preferred_date}\nКомментарий: {comment}"
         )
-        send_telegram(notify_text)
         send_email(f"Новая заявка на выезд сканирования #{order_id}", notify_text)
 
         return {"statusCode": 200, "headers": headers, "body": json.dumps({"success": True, "id": order_id})}
