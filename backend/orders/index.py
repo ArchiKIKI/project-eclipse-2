@@ -14,7 +14,8 @@ from email.header import Header
 import psycopg2
 import boto3
 
-NOTIFY_EMAIL = "csiperm@yandex.ru"
+SMTP_LOGIN_EMAIL = "csiperm@yandex.ru"
+NOTIFY_EMAIL = "Maratam.zag@yandex.ru"
 NOTIFY_TELEGRAM = "@Testusers21231"
 
 
@@ -56,12 +57,12 @@ def send_email(subject: str, body: str) -> None:
         return
     msg = MIMEText(body, "plain", "utf-8")
     msg["Subject"] = Header(subject, "utf-8")
-    msg["From"] = NOTIFY_EMAIL
+    msg["From"] = SMTP_LOGIN_EMAIL
     msg["To"] = NOTIFY_EMAIL
     try:
         with smtplib.SMTP_SSL("smtp.yandex.ru", 465, timeout=10) as server:
-            server.login(NOTIFY_EMAIL, password)
-            server.sendmail(NOTIFY_EMAIL, [NOTIFY_EMAIL], msg.as_string())
+            server.login(SMTP_LOGIN_EMAIL, password)
+            server.sendmail(SMTP_LOGIN_EMAIL, [NOTIFY_EMAIL], msg.as_string())
     except Exception:
         pass
 
