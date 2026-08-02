@@ -12,7 +12,6 @@ from email.header import Header
 import psycopg2
 import boto3
 
-SMTP_LOGIN_EMAIL = "csiperm@yandex.ru"
 NOTIFY_EMAIL = "Maratam.zag@yandex.ru"
 
 
@@ -41,12 +40,12 @@ def send_email(subject: str, body: str) -> None:
         return
     msg = MIMEText(body, "plain", "utf-8")
     msg["Subject"] = Header(subject, "utf-8")
-    msg["From"] = SMTP_LOGIN_EMAIL
+    msg["From"] = NOTIFY_EMAIL
     msg["To"] = NOTIFY_EMAIL
     try:
         with smtplib.SMTP_SSL("smtp.yandex.ru", 465, timeout=10) as server:
-            server.login(SMTP_LOGIN_EMAIL, password)
-            server.sendmail(SMTP_LOGIN_EMAIL, [NOTIFY_EMAIL], msg.as_string())
+            server.login(NOTIFY_EMAIL, password)
+            server.sendmail(NOTIFY_EMAIL, [NOTIFY_EMAIL], msg.as_string())
         print(f"Письмо успешно отправлено на {NOTIFY_EMAIL}")
     except Exception as e:
         print(f"Ошибка отправки письма: {e}")
