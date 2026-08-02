@@ -166,7 +166,7 @@ export default function PrintOrderPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-black dark:text-white mb-1.5">3D-модель (STL, OBJ)</label>
+                <label className="block text-sm font-medium text-black dark:text-white mb-1.5">3D-модель или архив с файлами</label>
                 <label className="flex items-center gap-3 px-4 py-3 rounded-lg border border-dashed border-gray-300 dark:border-gray-700 cursor-pointer hover:border-[#7A7FEE] transition-colors">
                   <Icon name="Upload" size={18} className="text-[#7A7FEE] flex-shrink-0" />
                   <span className="text-sm text-gray-600 dark:text-gray-300 truncate">
@@ -174,11 +174,22 @@ export default function PrintOrderPage() {
                   </span>
                   <input
                     type="file"
-                    accept=".stl,.obj,.step,.stp"
+                    accept=".stl,.obj,.step,.stp,.3mf,.zip,.rar,.7z,.tar,.gz"
                     className="hidden"
-                    onChange={(e) => setFile(e.target.files?.[0] || null)}
+                    onChange={(e) => {
+                      const f = e.target.files?.[0] || null
+                      if (f && f.size > 25 * 1024 * 1024) {
+                        toast({ title: "Файл слишком большой", description: "Максимальный размер файла — 25 МБ", variant: "destructive" })
+                        e.target.value = ""
+                        return
+                      }
+                      setFile(f)
+                    }}
                   />
                 </label>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1.5">
+                  Поддерживаются форматы: STL, OBJ, STEP, 3MF, а также архивы ZIP, RAR, 7Z, TAR.GZ. Максимум 25 МБ.
+                </p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">

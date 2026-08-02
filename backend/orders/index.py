@@ -19,16 +19,30 @@ def get_conn():
     return psycopg2.connect(os.environ["DATABASE_URL"])
 
 
+MAX_FILE_SIZE = 25 * 1024 * 1024  # 25 МБ
+
+ALLOWED_EXTENSIONS = {
+    "stl", "obj", "step", "stp", "3mf",
+    "zip", "rar", "7z", "tar", "gz",
+}
+
+
 def upload_file_to_s3(file_base64: str, file_name: str) -> str:
+    ext = file_name.split(".")[-1].lower() if "." in file_name else "stl"
+    if ext not in ALLOWED_EXTENSIONS:
+        raise ValueError(f"Недопустимый формат файла: .{ext}")
+
+    data = base64.b64decode(file_base64)
+    if len(data) > MAX_FILE_SIZE:
+        raise ValueError("Файл превышает максимальный размер 25 МБ")
+
     s3 = boto3.client(
         "s3",
         endpoint_url="https://bucket.poehali.dev",
         aws_access_key_id=os.environ["AWS_ACCESS_KEY_ID"],
         aws_secret_access_key=os.environ["AWS_SECRET_ACCESS_KEY"],
     )
-    ext = file_name.split(".")[-1] if "." in file_name else "stl"
     key = f"orders/{uuid.uuid4()}.{ext}"
-    data = base64.b64decode(file_base64)
     s3.put_object(Bucket="files", Key=key, Body=data, ContentType="application/octet-stream")
     return f"https://cdn.poehali.dev/projects/{os.environ['AWS_ACCESS_KEY_ID']}/bucket/{key}"
 
@@ -123,7 +137,12 @@ def handler(event: dict, context) -> dict:
         file_name = body.get("file_name") or ""
         file_base64 = body.get("file_base64")
         if file_base64 and file_name:
-            file_url = upload_file_to_s3(file_base64, file_name)
+            try:
+                file_url = upload_file_to_s3(file_base64, file_name)
+            except ValueError as e:
+                cur.close()
+                conn.close()
+                return {"statusCode": 400, "headers": headers, "body": json.dumps({"error": str(e)})}
 
         material = body.get("material") or ""
         color = body.get("color") or ""
