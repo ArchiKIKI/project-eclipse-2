@@ -27,7 +27,7 @@ export default function Hero() {
           <img
             src="/purple-circle-wave-static.png"
             alt="Purple Wave"
-            className="w-full h-auto md:h-full md:w-auto md:object-cover md:object-left"
+            className="hero-wave-animated w-full h-auto md:h-full md:w-auto md:object-cover md:object-left"
           />
         </div>
       </div>

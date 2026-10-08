@@ -227,3 +227,26 @@
     @apply font-semibold text-gray-900 dark:text-white;
   }
 }
+@keyframes hero-wave-float {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+  25% { transform: translate3d(-10px, -14px, 0) rotate(2deg) scale(1.03); }
+  50% { transform: translate3d(0, -22px, 0) rotate(0deg) scale(1.05); }
+  75% { transform: translate3d(10px, -10px, 0) rotate(-2deg) scale(1.02); }
+}
+
+@keyframes hero-wave-glow {
+  0%, 100% { filter: hue-rotate(0deg) brightness(1) saturate(1); }
+  50% { filter: hue-rotate(-18deg) brightness(1.08) saturate(1.15); }
+}
+
+.hero-wave-animated {
+  transform-origin: 50% 50%;
+  will-change: transform, filter;
+  animation:
+    hero-wave-float 9s ease-in-out infinite,
+    hero-wave-glow 6s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-wave-animated { animation: none; }
+}
