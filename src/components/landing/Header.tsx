@@ -55,7 +55,7 @@ export default function Header() {
         }`}
       >
         <div className="container py-4">
-          <div className="flex items-center justify-between gap-4">
+          <div className="flex items-center justify-between gap-4 rounded-2xl border border-[#7A7FEE]/50 px-4 py-2 md:px-5 shadow-[0_0_18px_rgba(122,127,238,0.18)]">
             <Link to="/" className="flex items-center gap-2 flex-shrink-0">
               <img
                 src="https://cdn.poehali.dev/projects/f76cda14-7429-4cfa-98c1-c5a650df2ebc/bucket/favicon-nobg.png"
