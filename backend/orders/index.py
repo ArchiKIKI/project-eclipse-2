@@ -71,7 +71,7 @@ def tg_call(method: str, payload: dict) -> dict:
     token = os.environ["TELEGRAM_BOT_TOKEN"]
     data = urllib.parse.urlencode(payload).encode()
     req = urllib.request.Request(f"https://api.telegram.org/bot{token}/{method}", data=data)
-    with urllib.request.urlopen(req, timeout=8) as resp:
+    with urllib.request.urlopen(req, timeout=4) as resp:
         return json.loads(resp.read().decode())
 
 
