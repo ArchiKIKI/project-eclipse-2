@@ -1,14 +1,12 @@
 """
 Приём заявок на 3D-печать деталей и выезд на 3D-сканирование.
-Сохраняет заявку в БД, загружает файл модели в S3 (если есть) и отправляет уведомление на email и в Telegram.
+Сохраняет заявку в БД, загружает файл модели в S3 (если есть) и отправляет уведомление на email.
 """
 import json
 import os
 import base64
 import uuid
 import smtplib
-import urllib.request
-import urllib.parse
 from email.mime.text import MIMEText
 from email.header import Header
 import psycopg2
@@ -65,41 +63,6 @@ def send_email(subject: str, body: str) -> None:
         print(f"Письмо успешно отправлено на {NOTIFY_EMAIL}")
     except Exception as e:
         print(f"Ошибка отправки письма: {e}")
-
-
-def tg_call(method: str, payload: dict) -> dict:
-    token = os.environ["TELEGRAM_BOT_TOKEN"]
-    data = urllib.parse.urlencode(payload).encode()
-    req = urllib.request.Request(f"https://api.telegram.org/bot{token}/{method}", data=data)
-    with urllib.request.urlopen(req, timeout=4) as resp:
-        return json.loads(resp.read().decode())
-
-
-def find_chat_id() -> str:
-    chat_id = os.environ.get("TELEGRAM_CHAT_ID")
-    if chat_id:
-        return chat_id
-    updates = tg_call("getUpdates", {"limit": 20}).get("result", [])
-    for upd in reversed(updates):
-        chat = (upd.get("message") or {}).get("chat") or {}
-        if chat.get("id"):
-            return str(chat["id"])
-    return ""
-
-
-def send_telegram(text: str) -> None:
-    if not os.environ.get("TELEGRAM_BOT_TOKEN"):
-        print("TELEGRAM_BOT_TOKEN не задан, уведомление в Telegram не отправлено")
-        return
-    try:
-        chat_id = find_chat_id()
-        if not chat_id:
-            print("Не найден чат: напишите боту /start")
-            return
-        tg_call("sendMessage", {"chat_id": chat_id, "text": text, "disable_web_page_preview": "true"})
-        print("Уведомление в Telegram отправлено")
-    except Exception as e:
-        print(f"Ошибка отправки в Telegram: {e}")
 
 
 def handler(event: dict, context) -> dict:
@@ -203,7 +166,6 @@ def handler(event: dict, context) -> dict:
             f"Файл: {file_url or 'не приложен'}\nКомментарий: {comment}"
         )
         send_email(f"Новая заявка на 3D-печать #{order_id}", notify_text)
-        send_telegram(notify_text)
 
         return {"statusCode": 200, "headers": headers, "body": json.dumps({"success": True, "id": order_id})}
 
@@ -231,7 +193,6 @@ def handler(event: dict, context) -> dict:
             f"Адрес: {address}\nЖелаемая дата: {preferred_date}\nКомментарий: {comment}"
         )
         send_email(f"Новая заявка на выезд сканирования #{order_id}", notify_text)
-        send_telegram(notify_text)
 
         return {"statusCode": 200, "headers": headers, "body": json.dumps({"success": True, "id": order_id})}
 
