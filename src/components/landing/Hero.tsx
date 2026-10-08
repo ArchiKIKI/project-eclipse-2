@@ -27,9 +27,6 @@ export default function Hero() {
           <div className="hero-wave-wrap">
             <img src="/purple-circle-wave-static.png" alt="" aria-hidden="true" className="hero-wave-glow md:object-cover md:object-left" />
             <img src="/purple-circle-wave-static.png" alt="" aria-hidden="true" className="hero-wave-orbit md:object-cover md:object-left" />
-            <span className="hero-wave-ring" />
-            <span className="hero-wave-ring hero-wave-ring-2" />
-            <span className="hero-wave-ring hero-wave-ring-3" />
             <img
               src="/purple-circle-wave-static.png"
               alt="Purple Wave"
