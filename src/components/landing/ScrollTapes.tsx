@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react"
 import Icon from "@/components/ui/icon"
 
 const TICKS =
-  "repeating-linear-gradient(to bottom, rgba(17,17,17,0.85) 0 1px, transparent 1px 10px), repeating-linear-gradient(to bottom, rgba(17,17,17,0.85) 0 2px, transparent 2px 50px)"
+  "repeating-linear-gradient(to bottom, rgba(255,255,255,0.85) 0 1px, transparent 1px 10px), repeating-linear-gradient(to bottom, rgba(255,255,255,0.85) 0 2px, transparent 2px 50px)"
 
 export default function ScrollTapes() {
   const rootRef = useRef<HTMLDivElement>(null)
@@ -43,7 +43,7 @@ export default function ScrollTapes() {
     >
       <div className="absolute left-3 xl:left-6 top-[18vh] bottom-[12vh] w-9">
         <div
-          className="absolute inset-y-0 left-1/2 w-4 -translate-x-1/2 rounded-sm border border-black/70 bg-[#FFC400] shadow-md overflow-hidden"
+          className="absolute inset-y-0 left-1/2 w-4 -translate-x-1/2 rounded-sm border border-white/60 bg-[#7A7FEE] shadow-md overflow-hidden"
           style={{ backgroundImage: TICKS, backgroundPosition: "right top", backgroundSize: "60% 100%", backgroundRepeat: "repeat-y" }}
         >
           <div
@@ -52,7 +52,7 @@ export default function ScrollTapes() {
           />
         </div>
         <div
-          className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full border-2 border-black bg-[#FFC400] text-black shadow-lg"
+          className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 flex h-9 w-9 items-center justify-center rounded-full border-2 border-white bg-[#7A7FEE] text-white shadow-lg"
           style={{ top: "calc(var(--p) * 100%)" }}
         >
           <Icon name="HardHat" size={18} />
@@ -65,12 +65,12 @@ export default function ScrollTapes() {
           className="absolute left-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-1"
           style={{ top: "calc(var(--p) * 100%)" }}
         >
-          <div className="flex h-9 w-9 items-center justify-center rounded-md border-2 border-black bg-white text-black shadow-lg dark:border-[#FFC400] dark:bg-[#111111] dark:text-[#FFC400]">
+          <div className="flex h-9 w-9 items-center justify-center rounded-md border-2 border-black bg-white text-black shadow-lg dark:border-[#7A7FEE] dark:bg-[#111111] dark:text-[#7A7FEE]">
             <Icon name="Ruler" size={18} />
           </div>
           <span
             ref={percentRef}
-            className="rounded bg-black px-1.5 py-0.5 text-[10px] font-semibold tabular-nums text-[#FFC400]"
+            className="rounded bg-black px-1.5 py-0.5 text-[10px] font-semibold tabular-nums text-[#B9BCF7]"
           >
             0%
           </span>
