@@ -24,11 +24,18 @@ export default function Hero() {
         </div>
 
         <div className="hidden md:block md:w-2/5 md:absolute md:right-0 md:top-0 md:bottom-0 md:flex md:items-center">
-          <img
-            src="/purple-circle-wave-static.png"
-            alt="Purple Wave"
-            className="hero-wave-animated w-full h-auto md:h-full md:w-auto md:object-cover md:object-left"
-          />
+          <div className="hero-wave-wrap">
+            <img src="/purple-circle-wave-static.png" alt="" aria-hidden="true" className="hero-wave-glow md:object-cover md:object-left" />
+            <img src="/purple-circle-wave-static.png" alt="" aria-hidden="true" className="hero-wave-orbit md:object-cover md:object-left" />
+            <span className="hero-wave-ring" />
+            <span className="hero-wave-ring hero-wave-ring-2" />
+            <span className="hero-wave-ring hero-wave-ring-3" />
+            <img
+              src="/purple-circle-wave-static.png"
+              alt="Purple Wave"
+              className="hero-wave-main w-full h-auto md:h-full md:w-auto md:object-cover md:object-left"
+            />
+          </div>
         </div>
       </div>
     </section>
