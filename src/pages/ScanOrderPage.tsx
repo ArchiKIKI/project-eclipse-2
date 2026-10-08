@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Helmet } from "react-helmet-async"
 import Header from "@/components/landing/Header"
 import Footer from "@/components/landing/Footer"
+import PhoneInput from "@/components/landing/PhoneInput"
 import Icon from "@/components/ui/icon"
 import { toast } from "@/hooks/use-toast"
 import func2url from "../../backend/func2url.json"
@@ -20,6 +21,10 @@ export default function ScanOrderPage() {
     e.preventDefault()
     if (!name.trim() || !phone.trim() || !address.trim()) {
       toast({ title: "Заполните имя, телефон и адрес", variant: "destructive" })
+      return
+    }
+    if (phone.replace(/\D/g, "").length !== 11) {
+      toast({ title: "Введите номер телефона полностью", variant: "destructive" })
       return
     }
     setLoading(true)
@@ -99,10 +104,9 @@ export default function ScanOrderPage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-black dark:text-white mb-1.5">Телефон *</label>
-                  <input
-                    type="tel"
+                  <PhoneInput
                     value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
+                    onChange={setPhone}
                     className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#7A7FEE]"
                     placeholder="+7 900 000 00 00"
                   />

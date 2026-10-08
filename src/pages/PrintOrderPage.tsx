@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Helmet } from "react-helmet-async"
 import Header from "@/components/landing/Header"
 import Footer from "@/components/landing/Footer"
+import PhoneInput from "@/components/landing/PhoneInput"
 import PrintHero from "@/components/landing/PrintHero"
 import PrintServices from "@/components/landing/PrintServices"
 import PrintFormats from "@/components/landing/PrintFormats"
@@ -42,6 +43,10 @@ export default function PrintOrderPage() {
     e.preventDefault()
     if (!name.trim() || !phone.trim()) {
       toast({ title: "Заполните имя и телефон", variant: "destructive" })
+      return
+    }
+    if (phone.replace(/\D/g, "").length !== 11) {
+      toast({ title: "Введите номер телефона полностью", variant: "destructive" })
       return
     }
     setLoading(true)
@@ -144,10 +149,9 @@ export default function PrintOrderPage() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-black dark:text-white mb-1.5">Телефон *</label>
-                  <input
-                    type="tel"
+                  <PhoneInput
                     value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
+                    onChange={setPhone}
                     className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#7A7FEE]"
                     placeholder="+7 900 000 00 00"
                   />
