@@ -12,7 +12,7 @@ export default function GeodesyPage() {
       deviceName="SINO T80/LU8 Jupiter Laser GPS RTK"
       deviceType="GNSS-приёмник"
       deviceText="Высокоточный геодезический приёмник со встроенным лазерным модулем. Определяет координаты в режиме реального времени (RTK) с сантиметровой точностью, а лазерная функция позволяет снимать труднодоступные точки без выхода на них. Компактный, быстро развёртывается и подходит для работы на любом объекте."
-      images={["https://cdn.poehali.dev/projects/f76cda14-7429-4cfa-98c1-c5a650df2ebc/bucket/e97bf6c0-2278-451f-8b18-c98c0f0ed0b6.png"]}
+      images={["/jupiter-pole.jpg"]}
       workTitle="Виды работ"
       works={[
         { icon: "Crosshair", title: "Вынос осей и точек в натуру", text: "Разбивка осей зданий, фундаментов, колонн и инженерных сетей строго по проекту." },
