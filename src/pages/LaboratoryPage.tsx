@@ -16,7 +16,7 @@ export default function LaboratoryPage() {
         "https://cdn.poehali.dev/projects/f76cda14-7429-4cfa-98c1-c5a650df2ebc/bucket/110bf28f-027f-41d3-8153-a2b851fcc768.jpg",
         "https://cdn.poehali.dev/projects/f76cda14-7429-4cfa-98c1-c5a650df2ebc/bucket/1bb0c828-f7d1-44ef-a265-283d70d820c8.jpg",
       ]}
-      workTitle="Что мы проверяем"
+      workTitle="Виды контроля"
       works={[
         { icon: "Gauge", title: "Прочность бетона", text: "Определение фактической прочности бетона в конструкциях без отбора образцов." },
         { icon: "SearchCheck", title: "Поиск дефектов и пустот", text: "Выявляем раковины, трещины, расслоения и непроклеенные участки внутри конструкции." },
