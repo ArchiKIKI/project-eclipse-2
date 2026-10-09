@@ -14,12 +14,14 @@ export default function ScanModelViewer() {
         {ready ? (
           createElement("model-viewer", {
             src: "/models/scan-sample.glb",
-            alt: "Отсканированная 3D-модель седана",
+            alt: "Отсканированная 3D-модель автомобиля",
             "camera-controls": true,
             "auto-rotate": true,
             "touch-action": "pan-y",
             "shadow-intensity": "1",
             "camera-orbit": "35deg 75deg auto",
+            "loading": "eager",
+            "environment-image": "neutral",
             "interaction-prompt": "none",
             style: { width: "100%", height: "100%", "--poster-color": "transparent" },
           })
