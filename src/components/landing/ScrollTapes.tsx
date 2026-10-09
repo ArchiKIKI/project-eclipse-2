@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import type { PointerEvent as ReactPointerEvent } from "react"
+import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react"
 import { useLocation } from "react-router-dom"
 import Icon from "@/components/ui/icon"
 
@@ -28,6 +28,36 @@ function PoleSvg() {
       <circle cx="17" cy="13.5" r="1" fill="white" />
     </svg>
   )
+}
+
+const BRICK = "#C2603A"
+const MORTAR = "rgba(255,255,255,0.75)"
+
+const TRACKS: Record<string, { className: string; style: CSSProperties; fill: string }> = {
+  "/print-order": {
+    className: "w-4 rounded-sm border border-white/60 shadow-md",
+    style: { backgroundImage: "repeating-linear-gradient(to bottom, #7A7FEE 0 4px, #5A5FD0 4px 6px)" },
+    fill: "bg-black/30",
+  },
+  "/geodesy": {
+    className: "w-4 border border-white/70 shadow-md",
+    style: { backgroundImage: "repeating-linear-gradient(to bottom, #ffffff 0 10px, #E53935 10px 20px, #ffffff 20px 30px, #111111 30px 40px)" },
+    fill: "bg-black/30",
+  },
+  "/laboratory": {
+    className: "w-5 rounded-b-full rounded-t-md border-2 border-white/80 bg-white/15 shadow-md",
+    style: {},
+    fill: "bg-[#7A7FEE]",
+  },
+  "/services": {
+    className: "w-5 rounded-sm border border-white/60 shadow-md",
+    style: {
+      backgroundColor: BRICK,
+      backgroundImage: `linear-gradient(to bottom, transparent 0 12px, ${MORTAR} 12px 14px), linear-gradient(to right, transparent 0 calc(50% - 1px), ${MORTAR} calc(50% - 1px) calc(50% + 1px), transparent calc(50% + 1px))`,
+      backgroundSize: "100% 14px, 100% 28px",
+    },
+    fill: "bg-black/30",
+  },
 }
 
 const HANDLE_ICONS: Record<string, string> = {
@@ -101,6 +131,8 @@ export default function ScrollTapes() {
     setDragging(false)
   }
 
+  const track = TRACKS[pathname]
+
   return (
     <div
       ref={rootRef}
@@ -122,12 +154,21 @@ export default function ScrollTapes() {
         onPointerUp={onPointerUp}
         onPointerCancel={onPointerUp}
       >
-        <div
-          className="pointer-events-none absolute inset-y-0 left-1/2 w-4 -translate-x-1/2 rounded-sm border border-white/60 bg-[#7A7FEE] shadow-md overflow-hidden"
-          style={{ backgroundImage: TICKS, backgroundPosition: "right top", backgroundSize: "60% 100%", backgroundRepeat: "repeat-y" }}
-        >
-          <div className="absolute inset-x-0 top-0 bg-black/25" style={{ height: "calc(var(--p) * 100%)" }} />
-        </div>
+        {track ? (
+          <div
+            className={`pointer-events-none absolute inset-y-0 left-1/2 -translate-x-1/2 overflow-hidden ${track.className}`}
+            style={track.style}
+          >
+            <div className={`absolute inset-x-0 top-0 ${track.fill}`} style={{ height: "calc(var(--p) * 100%)" }} />
+          </div>
+        ) : (
+          <div
+            className="pointer-events-none absolute inset-y-0 left-1/2 w-4 -translate-x-1/2 rounded-sm border border-white/60 bg-[#7A7FEE] shadow-md overflow-hidden"
+            style={{ backgroundImage: TICKS, backgroundPosition: "right top", backgroundSize: "60% 100%", backgroundRepeat: "repeat-y" }}
+          >
+            <div className="absolute inset-x-0 top-0 bg-black/25" style={{ height: "calc(var(--p) * 100%)" }} />
+          </div>
+        )}
         {pathname === "/geodesy" ? (
           <div
             className={`pointer-events-none absolute left-1/2 -translate-x-1/2 text-white transition-transform ${
