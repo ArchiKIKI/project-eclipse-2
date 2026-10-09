@@ -31,6 +31,8 @@ export default function Header() {
       label: "Услуги",
       children: [
         { to: "/services", label: "Строительный контроль" },
+        { to: "/geodesy", label: "Геодезическое обеспечение" },
+        { to: "/laboratory", label: "Строительная лаборатория" },
         { to: "/print-order", label: "3D печать" },
         { to: "/scan-order", label: "Сканирование" },
       ],

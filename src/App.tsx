@@ -8,6 +8,8 @@ import { HelmetProvider } from "react-helmet-async"
 import Index from "./pages/Index"
 import { Navigate } from "react-router-dom"
 import ServicesPage from "./pages/ServicesPage"
+import GeodesyPage from "./pages/GeodesyPage"
+import LaboratoryPage from "./pages/LaboratoryPage"
 import ContactsPage from "./pages/ContactsPage"
 import PrintOrderPage from "./pages/PrintOrderPage"
 import ScanOrderPage from "./pages/ScanOrderPage"
@@ -35,6 +37,8 @@ const App = () => (
             <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/services" element={<ServicesPage />} />
+            <Route path="/geodesy" element={<GeodesyPage />} />
+            <Route path="/laboratory" element={<LaboratoryPage />} />
             <Route path="/contacts" element={<ContactsPage />} />
             <Route path="/print-order" element={<PrintOrderPage />} />
             <Route path="/scan-order" element={<ScanOrderPage />} />
