@@ -48,8 +48,8 @@ export default function ServiceDetail(p: ServiceDetailProps) {
             </div>
             <div className={`grid gap-4 ${p.images.length > 1 ? "grid-cols-2" : "grid-cols-1"}`}>
               {p.images.map((src, i) => (
-                <div key={i} className="rounded-xl bg-white overflow-hidden flex items-center justify-center p-2 border border-gray-200 dark:border-gray-700">
-                  <img src={src} alt={p.deviceName} className="w-full h-56 md:h-64 object-contain" loading="lazy" />
+                <div key={i} className="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700">
+                  <img src={src} alt={p.deviceName} className="w-full aspect-square object-cover object-center" loading="lazy" />
                 </div>
               ))}
             </div>
