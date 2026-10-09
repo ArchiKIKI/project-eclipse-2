@@ -30,6 +30,7 @@ export default function Header() {
       to: "/services",
       label: "Услуги",
       children: [
+        { to: "/services", label: "Строительный контроль" },
         { to: "/print-order", label: "3D печать" },
         { to: "/scan-order", label: "Сканирование" },
       ],
