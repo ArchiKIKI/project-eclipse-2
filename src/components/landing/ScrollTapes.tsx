@@ -96,7 +96,7 @@ export default function ScrollTapes() {
     const track = trackRef.current
     if (!track) return
     const rect = track.getBoundingClientRect()
-    const ratio = Math.min(1, Math.max(0, (clientY - rect.top) / rect.height))
+    const ratio = Math.min(1, Math.max(0, 1 - (clientY - rect.top) / rect.height))
     const max = document.documentElement.scrollHeight - window.innerHeight
     window.scrollTo({ top: ratio * max, behavior: "instant" as ScrollBehavior })
   }
@@ -164,7 +164,7 @@ export default function ScrollTapes() {
             className={`pointer-events-none absolute left-1/2 -translate-x-1/2 text-white transition-transform ${
               dragging ? "scale-110" : ""
             }`}
-            style={{ top: "calc(var(--p) * 100%)", marginTop: "-42px" }}
+            style={{ top: "calc((1 - var(--p)) * 100%)", marginTop: "-42px" }}
           >
             <PoleSvg />
           </div>
@@ -173,7 +173,7 @@ export default function ScrollTapes() {
             className={`pointer-events-none absolute left-1/2 flex h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-white bg-[#7A7FEE] text-white shadow-lg transition-transform ${
               dragging ? "scale-110" : ""
             }`}
-            style={{ top: "calc(var(--p) * 100%)" }}
+            style={{ top: "calc((1 - var(--p)) * 100%)" }}
           >
             <Handle pathname={pathname} />
           </div>
