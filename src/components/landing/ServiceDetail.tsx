@@ -38,20 +38,20 @@ export default function ServiceDetail(p: ServiceDetailProps) {
           </h1>
           <p className="mb-12 max-w-2xl text-gray-700 dark:text-gray-300">{p.intro}</p>
 
-          <div className="card p-6 md:p-8 shadow-md mb-12 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center border-2 border-[#7A7FEE]">
-            <div>
+          <div className="card p-6 md:p-8 shadow-md mb-12 grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-8 items-center border-2 border-[#7A7FEE]">
+            <div className={`md:col-span-2 grid gap-3 ${p.images.length > 1 ? "grid-cols-2" : "grid-cols-1"}`}>
+              {p.images.map((src, i) => (
+                <div key={i} className="rounded-xl overflow-hidden bg-white">
+                  <img src={src} alt={p.deviceName} className="w-full aspect-square object-cover object-center" loading="lazy" />
+                </div>
+              ))}
+            </div>
+            <div className="md:col-span-3">
               <span className="inline-block text-xs font-semibold text-[#7A7FEE] border border-[#7A7FEE] rounded-full px-3 py-1 mb-3 uppercase tracking-wide">
                 {p.deviceType}
               </span>
               <h2 className="text-2xl md:text-3xl font-semibold text-black dark:text-white mb-3">{p.deviceName}</h2>
               <p className="text-gray-700 dark:text-gray-300 text-sm md:text-base">{p.deviceText}</p>
-            </div>
-            <div className={`grid gap-4 ${p.images.length > 1 ? "grid-cols-2" : "grid-cols-1"}`}>
-              {p.images.map((src, i) => (
-                <div key={i} className="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700">
-                  <img src={src} alt={p.deviceName} className="w-full aspect-square object-cover object-center" loading="lazy" />
-                </div>
-              ))}
             </div>
           </div>
 
