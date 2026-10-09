@@ -103,11 +103,7 @@ export default function Header() {
                               <Link
                                 key={child.to}
                                 to={child.to}
-                                className={`px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${
-                                  location.pathname === child.to
-                                    ? "bg-[#7A7FEE] text-white"
-                                    : "text-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-800"
-                                }`}
+                                className="px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors text-black dark:text-white hover:bg-[#7A7FEE] hover:text-white"
                               >
                                 {child.label}
                               </Link>
