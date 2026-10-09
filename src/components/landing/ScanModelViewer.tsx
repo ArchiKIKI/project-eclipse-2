@@ -19,7 +19,7 @@ export default function ScanModelViewer() {
             "auto-rotate": true,
             "touch-action": "pan-y",
             "shadow-intensity": "1",
-            "camera-orbit": "35deg 70deg auto",
+            "camera-orbit": "-35deg 72deg auto",
             "interaction-prompt": "none",
             style: { width: "100%", height: "100%", "--poster-color": "transparent" },
           })
