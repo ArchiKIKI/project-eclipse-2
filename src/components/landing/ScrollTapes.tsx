@@ -28,9 +28,11 @@ function PoleSvg() {
 }
 
 const TRACK = {
-  className: "w-5 rounded-b-full rounded-t-md border-2 border-white/80 bg-white/15 shadow-md",
-  fill: "bg-[#7A7FEE]",
+  className: "w-5 rounded-full border-2 border-white/80 bg-white/15 shadow-md",
 }
+
+const WAVE =
+  "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 8' preserveAspectRatio='none'><path d='M0 4 Q10 8 20 4 T40 4 V0 H0 Z' fill='%237A7FEE'/></svg>\")"
 
 const HANDLE_ICONS: Record<string, string> = {
   "/services": "HardHat",
@@ -127,7 +129,13 @@ export default function ScrollTapes() {
         <div
           className={`pointer-events-none absolute inset-y-0 left-1/2 -translate-x-1/2 overflow-hidden ${TRACK.className}`}
         >
-          <div className={`absolute inset-x-0 top-0 ${TRACK.fill}`} style={{ height: "calc(var(--p) * 100%)" }} />
+          <div className="absolute inset-x-0 top-0" style={{ height: "calc(var(--p) * 100%)" }}>
+            <div className="absolute inset-x-0 top-0 bottom-1 bg-[#7A7FEE]" />
+            <div
+              className="absolute inset-x-0 -bottom-1 h-2 animate-[water-wave_1.6s_linear_infinite]"
+              style={{ backgroundImage: WAVE, backgroundSize: "20px 100%", backgroundRepeat: "repeat-x" }}
+            />
+          </div>
         </div>
         {pathname === "/geodesy" ? (
           <div

@@ -69,6 +69,10 @@ export default {
 				sm: 'calc(var(--radius) - 4px)'
 			},
 			keyframes: {
+				'water-wave': {
+					from: { backgroundPositionX: '0px' },
+					to: { backgroundPositionX: '20px' },
+				},
 				'accordion-down': {
 					from: {
 						height: '0'
