@@ -9,7 +9,7 @@ const materials = [
 ]
 
 const services = [
-  { id: 1, name: "Выезд на 3D-сканирование", desc: "В пределах города, обработка результата", price: "от 3 000 ₽", icon: "ScanLine" },
+  { id: 1, name: "Выезд на 3D-сканирование", desc: "Сканер Creality CR-Scan Ferret Pro, обработка результата", price: "15 000 ₽", icon: "ScanLine" },
   { id: 2, name: "Доработка 3D-модели", desc: "Исправление геометрии, подготовка к печати", price: "от 1 000 ₽", icon: "PenTool" },
   { id: 3, name: "Постобработка изделия", desc: "Шлифовка, покраска, склейка деталей", price: "от 500 ₽", icon: "Wand2" },
 ]

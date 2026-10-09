@@ -13,7 +13,7 @@ export default function PrintHero() {
             на заказ
           </h1>
           <p className="my-6 text-sm md:text-base max-w-md text-gray-700 dark:text-gray-300">
-            Печатаем на профессиональном принтере QIDI Q2 по вашей 3D-модели или чертежу. А если модели нет — приедем со сканером, снимем деталь и подготовим файл для печати.
+            Печатаем на профессиональном принтере QIDI Q2 по вашей 3D-модели или чертежу. А если модели нет — приедем со сканером Creality CR-Scan Ferret Pro, снимем деталь и подготовим файл для печати.
           </p>
           <div className="flex flex-wrap items-center gap-4">
             <a href="#order-form" className="btn-primary">

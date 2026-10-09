@@ -63,7 +63,7 @@ export default function ScanOrderPage() {
     <>
       <Helmet>
         <title>Заказать выезд на 3D-сканирование — Центр Строительного Инжиниринга</title>
-        <meta name="description" content="Закажите выезд специалиста с 3D-сканером для оцифровки детали и последующей печати." />
+        <meta name="description" content="Закажите выезд специалиста с 3D-сканером Creality CR-Scan Ferret Pro (15 000 ₽) для оцифровки детали и последующей печати." />
       </Helmet>
       <main className="min-h-screen bg-white dark:bg-[#111111]">
         <Header />
@@ -73,8 +73,40 @@ export default function ScanOrderPage() {
             Заказать выезд на 3D-сканирование
           </h1>
           <p className="text-gray-600 dark:text-gray-300 max-w-xl mb-10">
-            Приедем к вам с 3D-сканером, снимем деталь и подготовим цифровую модель для последующей печати. Укажите адрес и удобное время — мы согласуем визит.
+            Приедем к вам со сканером Creality CR-Scan Ferret Pro, снимем деталь и подготовим цифровую модель для последующей печати. Укажите адрес и удобное время — мы согласуем визит.
           </p>
+
+          <div className="card p-6 md:p-8 max-w-2xl mb-8">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-11 h-11 bg-[#7A7FEE] rounded-xl flex items-center justify-center flex-shrink-0">
+                <Icon name="ScanLine" size={24} className="text-white" />
+              </div>
+              <div>
+                <div className="text-sm text-gray-500 dark:text-gray-400">3D-сканер</div>
+                <h2 className="text-lg font-semibold text-black dark:text-white leading-tight">Creality CR-Scan Ferret Pro</h2>
+              </div>
+            </div>
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
+              Портативный беспроводной 3D-сканер на структурированном свете. Быстро снимает детали разной формы и размера с точностью до 0,1 мм и передаёт цветную цифровую модель, готовую для доработки и печати. Применяется для копирования и реставрации деталей, обмеров и создания прототипов.
+            </p>
+            <ul className="space-y-2 mb-5 text-gray-700 dark:text-gray-300">
+              {[
+                "Точность сканирования до 0,1 мм",
+                "Скорость съёмки до 30 кадров в секунду",
+                "Беспроводная работа, без привязки к рабочему месту",
+                "Сохранение цвета и текстуры объекта",
+              ].map((item) => (
+                <li key={item} className="flex items-start gap-2">
+                  <Icon name="Check" size={18} className="text-[#7A7FEE] mt-0.5 flex-shrink-0" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="flex items-center justify-between flex-wrap gap-2 pt-4 border-t border-gray-100 dark:border-gray-800">
+              <span className="text-gray-600 dark:text-gray-300">Стоимость вызова специалиста</span>
+              <span className="text-xl font-semibold text-black dark:text-white">15 000 ₽</span>
+            </div>
+          </div>
 
           {success ? (
             <div className="card p-8 max-w-xl text-center">
