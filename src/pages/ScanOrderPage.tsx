@@ -77,36 +77,44 @@ export default function ScanOrderPage() {
             Приедем к вам со сканером Creality CR-Scan Ferret Pro, снимем деталь и подготовим цифровую модель для последующей печати. Укажите адрес и удобное время — мы согласуем визит.
           </p>
 
-          <div className="card p-6 md:p-8 max-w-2xl mb-8">
-            <img src={scannerImg} alt="3D-сканер Creality CR-Scan Ferret Pro" className="w-full max-h-72 object-contain rounded-xl bg-gray-50 dark:bg-[#1a1a1a] mb-5" />
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-11 h-11 bg-[#7A7FEE] rounded-xl flex items-center justify-center flex-shrink-0">
-                <Icon name="ScanLine" size={24} className="text-white" />
-              </div>
-              <div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">3D-сканер</div>
-                <h2 className="text-lg font-semibold text-black dark:text-white leading-tight">Creality CR-Scan Ferret Pro</h2>
-              </div>
+          <div className="card p-6 md:p-8 max-w-4xl mb-8 grid grid-cols-1 md:grid-cols-5 gap-6 md:gap-8 items-center">
+            <div className="md:col-span-2 rounded-xl overflow-hidden bg-white">
+              <img
+                src={scannerImg}
+                alt="3D-сканер Creality CR-Scan Ferret Pro"
+                className="w-full aspect-[4/5] object-cover object-center"
+              />
             </div>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Портативный беспроводной 3D-сканер на структурированном свете. Быстро снимает детали разной формы и размера с точностью до 0,1 мм и передаёт цветную цифровую модель, готовую для доработки и печати. Применяется для копирования и реставрации деталей, обмеров и создания прототипов.
-            </p>
-            <ul className="space-y-2 mb-5 text-gray-700 dark:text-gray-300">
-              {[
-                "Точность сканирования до 0,1 мм",
-                "Скорость съёмки до 30 кадров в секунду",
-                "Беспроводная работа, без привязки к рабочему месту",
-                "Сохранение цвета и текстуры объекта",
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-2">
-                  <Icon name="Check" size={18} className="text-[#7A7FEE] mt-0.5 flex-shrink-0" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-            <div className="flex items-center justify-between flex-wrap gap-2 pt-4 border-t border-gray-100 dark:border-gray-800">
-              <span className="text-gray-600 dark:text-gray-300">Стоимость вызова специалиста</span>
-              <span className="text-xl font-semibold text-black dark:text-white">15 000 ₽</span>
+            <div className="md:col-span-3">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-11 h-11 bg-[#7A7FEE] rounded-xl flex items-center justify-center flex-shrink-0">
+                  <Icon name="ScanLine" size={24} className="text-white" />
+                </div>
+                <div>
+                  <div className="text-sm text-gray-500 dark:text-gray-400">3D-сканер</div>
+                  <h2 className="text-lg font-semibold text-black dark:text-white leading-tight">Creality CR-Scan Ferret Pro</h2>
+                </div>
+              </div>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
+                Портативный беспроводной 3D-сканер на структурированном свете. Быстро снимает детали разной формы и размера с точностью до 0,1 мм и передаёт цветную цифровую модель, готовую для доработки и печати. Применяется для копирования и реставрации деталей, обмеров и создания прототипов.
+              </p>
+              <ul className="space-y-2 mb-5 text-gray-700 dark:text-gray-300">
+                {[
+                  "Точность сканирования до 0,1 мм",
+                  "Скорость съёмки до 30 кадров в секунду",
+                  "Беспроводная работа, без привязки к рабочему месту",
+                  "Сохранение цвета и текстуры объекта",
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2">
+                    <Icon name="Check" size={18} className="text-[#7A7FEE] mt-0.5 flex-shrink-0" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="flex items-center justify-between flex-wrap gap-2 pt-4 border-t border-gray-100 dark:border-gray-800">
+                <span className="text-gray-600 dark:text-gray-300">Стоимость вызова специалиста</span>
+                <span className="text-xl font-semibold text-black dark:text-white">15 000 ₽</span>
+              </div>
             </div>
           </div>
 
