@@ -34,6 +34,14 @@ const TRACK = {
 const wave = (color: string) =>
   `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 14' preserveAspectRatio='none'><path d='M0 7 Q5 14 10 7 T20 7 V0 H0 Z' fill='${color}'/></svg>")`
 
+const BUBBLES = [
+  { left: "20%", size: 4, duration: "3.2s", delay: "0s" },
+  { left: "60%", size: 3, duration: "2.6s", delay: "0.8s" },
+  { left: "40%", size: 5, duration: "3.8s", delay: "1.6s" },
+  { left: "70%", size: 3, duration: "3s", delay: "2.2s" },
+  { left: "30%", size: 3, duration: "2.8s", delay: "1.1s" },
+]
+
 const WAVE_FRONT = wave("%237A7FEE")
 const WAVE_BACK = wave("%23A9ADF7")
 
@@ -134,6 +142,13 @@ export default function ScrollTapes() {
         >
           <div className="absolute inset-x-0 top-0" style={{ height: "calc(var(--p) * 100%)" }}>
             <div className="absolute inset-x-0 top-0 bottom-0 bg-[#7A7FEE]" />
+            {BUBBLES.map((b, i) => (
+              <span
+                key={i}
+                className="absolute rounded-full bg-white/70 animate-[bubble-rise_linear_infinite]"
+                style={{ left: b.left, width: b.size, height: b.size, animationDuration: b.duration, animationDelay: b.delay }}
+              />
+            ))}
             <div
               className="absolute inset-x-0 -bottom-[7px] h-[14px] animate-[water-wave_2.4s_linear_infinite] [animation-direction:reverse]"
               style={{ backgroundImage: WAVE_BACK, backgroundSize: "20px 100%", backgroundRepeat: "repeat-x", opacity: "min(1, calc(var(--p) * 40))" }}

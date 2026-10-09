@@ -69,6 +69,12 @@ export default {
 				sm: 'calc(var(--radius) - 4px)'
 			},
 			keyframes: {
+				'bubble-rise': {
+					from: { bottom: '0%', opacity: '0' },
+					'15%': { opacity: '0.9' },
+					'85%': { opacity: '0.9' },
+					to: { bottom: '95%', opacity: '0' },
+				},
 				'water-wave': {
 					from: { backgroundPositionX: '0px' },
 					to: { backgroundPositionX: '20px' },
