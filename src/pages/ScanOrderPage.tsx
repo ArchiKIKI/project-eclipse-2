@@ -6,7 +6,6 @@ import PhoneInput from "@/components/landing/PhoneInput"
 import Icon from "@/components/ui/icon"
 import { toast } from "@/hooks/use-toast"
 import scannerImg from "@/assets/creality-ferret-pro.jpg"
-import ScanModelViewer from "@/components/landing/ScanModelViewer"
 import func2url from "../../backend/func2url.json"
 
 export default function ScanOrderPage() {
@@ -118,8 +117,6 @@ export default function ScanOrderPage() {
               </div>
             </div>
           </div>
-
-          <ScanModelViewer />
 
           {success ? (
             <div className="card p-8 max-w-xl text-center">
