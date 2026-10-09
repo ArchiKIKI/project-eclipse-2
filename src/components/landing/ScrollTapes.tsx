@@ -32,7 +32,7 @@ const TRACK = {
 }
 
 const wave = (color: string) =>
-  `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 14' preserveAspectRatio='none'><path d='M0 7 Q5 0 10 7 T20 7 V14 H0 Z' fill='${color}'/></svg>")`
+  `url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 14' preserveAspectRatio='none'><path d='M0 7 Q5 14 10 7 T20 7 V0 H0 Z' fill='${color}'/></svg>")`
 
 const BUBBLES = [
   { left: "20%", size: 4, duration: "3.2s", delay: "0s" },
@@ -96,7 +96,7 @@ export default function ScrollTapes() {
     const track = trackRef.current
     if (!track) return
     const rect = track.getBoundingClientRect()
-    const ratio = Math.min(1, Math.max(0, 1 - (clientY - rect.top) / rect.height))
+    const ratio = Math.min(1, Math.max(0, (clientY - rect.top) / rect.height))
     const max = document.documentElement.scrollHeight - window.innerHeight
     window.scrollTo({ top: ratio * max, behavior: "instant" as ScrollBehavior })
   }
@@ -140,7 +140,7 @@ export default function ScrollTapes() {
         <div
           className={`pointer-events-none absolute inset-y-0 left-1/2 -translate-x-1/2 overflow-hidden ${TRACK.className}`}
         >
-          <div className="absolute inset-x-0 bottom-0" style={{ height: "calc(var(--p) * 100%)" }}>
+          <div className="absolute inset-x-0 top-0" style={{ height: "calc(var(--p) * 100%)" }}>
             <div className="absolute inset-x-0 top-0 bottom-0 bg-[#7A7FEE]" />
             {BUBBLES.map((b, i) => (
               <span
@@ -150,11 +150,11 @@ export default function ScrollTapes() {
               />
             ))}
             <div
-              className="absolute inset-x-0 -top-[7px] h-[14px] animate-[water-wave_2.4s_linear_infinite] [animation-direction:reverse]"
+              className="absolute inset-x-0 -bottom-[7px] h-[14px] animate-[water-wave_2.4s_linear_infinite] [animation-direction:reverse]"
               style={{ backgroundImage: WAVE_BACK, backgroundSize: "20px 100%", backgroundRepeat: "repeat-x", opacity: "min(1, calc(var(--p) * 40))" }}
             />
             <div
-              className="absolute inset-x-0 -top-[7px] h-[14px] animate-[water-wave_1.4s_linear_infinite]"
+              className="absolute inset-x-0 -bottom-[7px] h-[14px] animate-[water-wave_1.4s_linear_infinite]"
               style={{ backgroundImage: WAVE_FRONT, backgroundSize: "20px 100%", backgroundRepeat: "repeat-x", opacity: "min(1, calc(var(--p) * 40))" }}
             />
           </div>
@@ -164,7 +164,7 @@ export default function ScrollTapes() {
             className={`pointer-events-none absolute left-1/2 -translate-x-1/2 text-white transition-transform ${
               dragging ? "scale-110" : ""
             }`}
-            style={{ top: "calc((1 - var(--p)) * 100%)", marginTop: "-42px" }}
+            style={{ top: "calc(var(--p) * 100%)", marginTop: "-42px" }}
           >
             <PoleSvg />
           </div>
@@ -173,7 +173,7 @@ export default function ScrollTapes() {
             className={`pointer-events-none absolute left-1/2 flex h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-white bg-[#7A7FEE] text-white shadow-lg transition-transform ${
               dragging ? "scale-110" : ""
             }`}
-            style={{ top: "calc((1 - var(--p)) * 100%)" }}
+            style={{ top: "calc(var(--p) * 100%)" }}
           >
             <Handle pathname={pathname} />
           </div>
