@@ -5,6 +5,7 @@ import Footer from "@/components/landing/Footer"
 import PhoneInput from "@/components/landing/PhoneInput"
 import Icon from "@/components/ui/icon"
 import { toast } from "@/hooks/use-toast"
+import scannerImg from "@/assets/creality-ferret-pro.jpg"
 import func2url from "../../backend/func2url.json"
 
 export default function ScanOrderPage() {
@@ -77,6 +78,7 @@ export default function ScanOrderPage() {
           </p>
 
           <div className="card p-6 md:p-8 max-w-2xl mb-8">
+            <img src={scannerImg} alt="3D-сканер Creality CR-Scan Ferret Pro" className="w-full max-h-72 object-contain rounded-xl bg-gray-50 dark:bg-[#1a1a1a] mb-5" />
             <div className="flex items-center gap-3 mb-3">
               <div className="w-11 h-11 bg-[#7A7FEE] rounded-xl flex items-center justify-center flex-shrink-0">
                 <Icon name="ScanLine" size={24} className="text-white" />

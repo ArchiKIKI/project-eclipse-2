@@ -1,7 +1,7 @@
 import Icon from "@/components/ui/icon"
 import printingImg from "@/assets/qidi-q2-printing.jpg"
 import nozzleImg from "@/assets/qidi-q2-nozzle.jpg"
-import scannerImg from "@/assets/einstar-scanner.jpg"
+import scannerImg from "@/assets/creality-ferret-pro.jpg"
 import examplesImg from "@/assets/qidi-q2-examples.jpg"
 
 const formats = [
