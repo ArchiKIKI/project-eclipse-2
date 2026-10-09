@@ -14,12 +14,12 @@ export default function ScanModelViewer() {
         {ready ? (
           createElement("model-viewer", {
             src: "/models/scan-sample.glb",
-            alt: "Отсканированная 3D-модель здания",
+            alt: "Отсканированная 3D-модель моста",
             "camera-controls": true,
             "auto-rotate": true,
             "touch-action": "pan-y",
             "shadow-intensity": "1",
-            "camera-orbit": "30deg 65deg auto",
+            "camera-orbit": "35deg 70deg auto",
             "interaction-prompt": "none",
             style: { width: "100%", height: "100%", "--poster-color": "transparent" },
           })
