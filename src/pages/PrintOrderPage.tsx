@@ -11,7 +11,7 @@ import PrintPriceList from "@/components/landing/PrintPriceList"
 import PrintCallToAction from "@/components/landing/PrintCallToAction"
 import Icon from "@/components/ui/icon"
 import { toast } from "@/hooks/use-toast"
-import func2url from "../../backend/func2url.json"
+import { sendOrder } from "@/lib/sendOrder"
 
 const materials = ["PLA пластик", "ABS пластик", "PETG пластик", "Нейлон (PA)", "Другое / не знаю"]
 const colors = ["Белый", "Чёрный", "Серый", "Красный", "Синий", "Жёлтый", "Прозрачный", "Другой / не важно"]
@@ -51,31 +51,16 @@ export default function PrintOrderPage() {
     }
     setLoading(true)
     try {
-      let file_base64: string | undefined
-      let file_name: string | undefined
-      if (file) {
-        file_base64 = await fileToBase64(file)
-        file_name = file.name
-      }
-
-      const res = await fetch(func2url.orders, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          order_type: "print",
-          name,
-          phone,
-          email,
-          material,
-          color,
-          quantity,
-          comment,
-          file_base64,
-          file_name,
-        }),
+      await sendOrder("Заявка на 3D-печать", {
+        "Имя": name,
+        "Телефон": phone,
+        "Email": email,
+        "Материал": material,
+        "Цвет": color,
+        "Количество": quantity,
+        "Комментарий": comment,
+        "Файл модели (клиент приложит позже)": file ? file.name : "",
       })
-
-      if (!res.ok) throw new Error("Ошибка отправки")
 
       setSuccess(true)
       setName("")

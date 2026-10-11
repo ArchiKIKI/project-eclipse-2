@@ -7,7 +7,7 @@ import Icon from "@/components/ui/icon"
 import { toast } from "@/hooks/use-toast"
 import scannerImg from "@/assets/creality-ferret-pro.jpg"
 import ScanModelViewer from "@/components/landing/ScanModelViewer"
-import func2url from "../../backend/func2url.json"
+import { sendOrder } from "@/lib/sendOrder"
 
 export default function ScanOrderPage() {
   const [name, setName] = useState("")
@@ -31,21 +31,14 @@ export default function ScanOrderPage() {
     }
     setLoading(true)
     try {
-      const res = await fetch(func2url.orders, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          order_type: "scan",
-          name,
-          phone,
-          email,
-          address,
-          preferred_date: preferredDate,
-          comment,
-        }),
+      await sendOrder("Заявка на 3D-сканирование", {
+        "Имя": name,
+        "Телефон": phone,
+        "Email": email,
+        "Адрес выезда": address,
+        "Желаемая дата": preferredDate,
+        "Комментарий": comment,
       })
-
-      if (!res.ok) throw new Error("Ошибка отправки")
 
       setSuccess(true)
       setName("")
