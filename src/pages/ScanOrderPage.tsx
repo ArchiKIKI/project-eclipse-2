@@ -59,7 +59,7 @@ export default function ScanOrderPage() {
     <>
       <Helmet>
         <title>Заказать выезд на 3D-сканирование — Центр Строительного Инжиниринга</title>
-        <meta name="description" content="Закажите выезд специалиста с 3D-сканером Creality CR-Scan Ferret Pro (15 000 ₽) для оцифровки детали и последующей печати." />
+        <meta name="description" content="Закажите выезд специалиста с 3D-сканером Creality CR-Scan Ferret Pro (8 000 ₽) для оцифровки детали и последующей печати." />
       </Helmet>
       <main className="min-h-screen bg-white dark:bg-[#111111]">
         <Header />
@@ -108,7 +108,7 @@ export default function ScanOrderPage() {
               </ul>
               <div className="flex items-center justify-between flex-wrap gap-2 pt-4 border-t border-gray-100 dark:border-gray-800">
                 <span className="text-gray-600 dark:text-gray-300">Стоимость вызова специалиста</span>
-                <span className="text-xl font-semibold text-black dark:text-white">15 000 ₽</span>
+                <span className="text-xl font-semibold text-black dark:text-white">8 000 ₽</span>
               </div>
             </div>
           </div>

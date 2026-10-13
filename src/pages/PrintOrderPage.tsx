@@ -8,6 +8,7 @@ import PrintServices from "@/components/landing/PrintServices"
 import PrintFormats from "@/components/landing/PrintFormats"
 import PrintGallery from "@/components/landing/PrintGallery"
 import PrintPriceList from "@/components/landing/PrintPriceList"
+import PrintCalculator from "@/components/landing/PrintCalculator"
 import PrintCallToAction from "@/components/landing/PrintCallToAction"
 import Icon from "@/components/ui/icon"
 import { toast } from "@/hooks/use-toast"
@@ -93,6 +94,7 @@ export default function PrintOrderPage() {
         <PrintFormats />
         <PrintGallery />
         <PrintPriceList />
+        <PrintCalculator />
         <div className="container">
           <PrintCallToAction />
         </div>

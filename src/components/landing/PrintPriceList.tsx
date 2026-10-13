@@ -2,16 +2,16 @@ import Icon from "@/components/ui/icon"
 import printerImg from "@/assets/qidi-q2-printer.jpg"
 
 const materials = [
-  { id: 1, name: "PLA пластик", desc: "Базовый материал, экологичный, для прототипов и сувениров", price: "от 5 ₽/г", icon: "Box" },
-  { id: 2, name: "ABS пластик", desc: "Прочный и термостойкий, для функциональных деталей", price: "от 6 ₽/г", icon: "Shield" },
-  { id: 3, name: "PETG пластик", desc: "Ударопрочный, устойчив к влаге и химии", price: "от 7 ₽/г", icon: "Droplet" },
-  { id: 4, name: "Нейлон (PA) и инженерные пластики", desc: "Для нагруженных деталей, печать при 370°C в подогреваемой камере", price: "от 15 ₽/г", icon: "Cog" },
+  { id: 1, name: "PLA пластик", desc: "Базовый материал, экологичный, для прототипов и сувениров", price: "от 12 ₽/г", icon: "Box" },
+  { id: 2, name: "ABS пластик", desc: "Прочный и термостойкий, для функциональных деталей", price: "от 15 ₽/г", icon: "Shield" },
+  { id: 3, name: "PETG пластик", desc: "Ударопрочный, устойчив к влаге и химии", price: "от 15 ₽/г", icon: "Droplet" },
+  { id: 4, name: "Нейлон (PA) и инженерные пластики", desc: "Для нагруженных деталей, печать при 370°C в подогреваемой камере", price: "от 30 ₽/г", icon: "Cog" },
 ]
 
 const services = [
-  { id: 1, name: "Выезд на 3D-сканирование", desc: "Сканер Creality CR-Scan Ferret Pro, обработка результата", price: "15 000 ₽", icon: "ScanLine" },
-  { id: 2, name: "Доработка 3D-модели", desc: "Исправление геометрии, подготовка к печати", price: "от 1 000 ₽", icon: "PenTool" },
-  { id: 3, name: "Постобработка изделия", desc: "Шлифовка, покраска, склейка деталей", price: "от 500 ₽", icon: "Wand2" },
+  { id: 1, name: "Выезд на 3D-сканирование", desc: "Сканер Creality CR-Scan Ferret Pro, обработка результата", price: "8 000 ₽", icon: "ScanLine" },
+  { id: 2, name: "Доработка 3D-модели", desc: "Исправление геометрии, подготовка к печати", price: "от 1 500 ₽", icon: "PenTool" },
+  { id: 3, name: "Постобработка изделия", desc: "Шлифовка, покраска, склейка деталей", price: "от 700 ₽", icon: "Wand2" },
 ]
 
 export default function PrintPriceList() {
@@ -74,7 +74,7 @@ export default function PrintPriceList() {
 
             <div className="mt-6 p-4 rounded-xl bg-[#7A7FEE]/5 border border-[#7A7FEE]/20">
               <p className="text-sm text-gray-700 dark:text-gray-300">
-                Точную стоимость печати вашей детали рассчитаем после получения файла — зависит от объёма, материала и сложности геометрии.
+                Минимальный заказ на печать — 500 ₽. Точную стоимость вашей детали рассчитаем после получения файла — она зависит от объёма, материала и сложности геометрии.
               </p>
             </div>
           </div>
