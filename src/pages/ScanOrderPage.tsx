@@ -7,6 +7,7 @@ import Icon from "@/components/ui/icon"
 import { toast } from "@/hooks/use-toast"
 import scannerImg from "@/assets/creality-ferret-pro.jpg"
 import ScanModelViewer from "@/components/landing/ScanModelViewer"
+import DateTimePicker from "@/components/landing/DateTimePicker"
 import { sendOrder } from "@/lib/sendOrder"
 
 export default function ScanOrderPage() {
@@ -175,13 +176,7 @@ export default function ScanOrderPage() {
 
               <div>
                 <label className="block text-sm font-medium text-black dark:text-white mb-1.5">Желаемая дата и время</label>
-                <input
-                  type="text"
-                  value={preferredDate}
-                  onChange={(e) => setPreferredDate(e.target.value)}
-                  className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#7A7FEE]"
-                  placeholder="Например: завтра после 15:00"
-                />
+                <DateTimePicker value={preferredDate} onChange={setPreferredDate} />
               </div>
 
               <div>
