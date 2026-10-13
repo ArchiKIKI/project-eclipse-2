@@ -64,6 +64,11 @@ export default function DateTimePicker({ value, onChange }: Props) {
           }}
           disabled={{ before: today }}
           className="bg-white dark:bg-[#1a1a1a] text-black dark:text-white"
+          classNames={{
+            day_selected:
+              "bg-[#7A7FEE] text-white hover:bg-[#7A7FEE] hover:text-white focus:bg-[#7A7FEE] focus:text-white",
+            day_today: "border border-[#7A7FEE] text-black dark:text-white",
+          }}
         />
         <div className="border-t border-gray-200 dark:border-gray-700 p-3">
           <div className="text-sm font-medium mb-2 text-black dark:text-white">Время</div>
