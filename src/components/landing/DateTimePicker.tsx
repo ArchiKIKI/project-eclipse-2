@@ -1,8 +1,8 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { format } from "date-fns"
 import { ru } from "date-fns/locale"
 import { Calendar } from "@/components/ui/calendar"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import Icon from "@/components/ui/icon"
 
 const times = Array.from({ length: 21 }, (_, i) => {
@@ -21,6 +21,13 @@ export default function DateTimePicker({ value, onChange }: Props) {
   const [time, setTime] = useState("")
   const [open, setOpen] = useState(false)
 
+  useEffect(() => {
+    if (!value) {
+      setDate(undefined)
+      setTime("")
+    }
+  }, [value])
+
   const update = (d?: Date, t?: string) => {
     if (d && t) onChange(`${format(d, "dd.MM.yyyy")} в ${t}`)
     else onChange("")
@@ -30,10 +37,10 @@ export default function DateTimePicker({ value, onChange }: Props) {
   today.setHours(0, 0, 0, 0)
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
+    <>
         <button
           type="button"
+          onClick={() => setOpen(true)}
           className="w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] text-left flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-[#7A7FEE]"
         >
           <span className={value ? "text-black dark:text-white" : "text-gray-400"}>
@@ -41,8 +48,11 @@ export default function DateTimePicker({ value, onChange }: Props) {
           </span>
           <Icon name="CalendarDays" size={18} className="text-gray-500" />
         </button>
-      </PopoverTrigger>
-      <PopoverContent className="w-auto p-0" align="start">
+      <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent className="w-auto max-w-[95vw] max-h-[95vh] overflow-y-auto p-0 gap-0 bg-white dark:bg-[#1a1a1a] border border-gray-200 dark:border-gray-700 opacity-100">
+        <DialogHeader className="px-4 pt-4 pb-0">
+          <DialogTitle className="text-black dark:text-white">Дата и время визита</DialogTitle>
+        </DialogHeader>
         <Calendar
           mode="single"
           locale={ru}
@@ -53,7 +63,7 @@ export default function DateTimePicker({ value, onChange }: Props) {
             update(d, time)
           }}
           disabled={{ before: today }}
-          initialFocus
+          className="bg-white dark:bg-[#1a1a1a] text-black dark:text-white"
         />
         <div className="border-t border-gray-200 dark:border-gray-700 p-3">
           <div className="text-sm font-medium mb-2 text-black dark:text-white">Время</div>
@@ -85,7 +95,8 @@ export default function DateTimePicker({ value, onChange }: Props) {
             Готово
           </button>
         </div>
-      </PopoverContent>
-    </Popover>
+      </DialogContent>
+      </Dialog>
+    </>
   )
 }
