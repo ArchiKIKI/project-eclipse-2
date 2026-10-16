@@ -14,7 +14,7 @@ import Icon from "@/components/ui/icon"
 import { toast } from "@/hooks/use-toast"
 import { sendOrder } from "@/lib/sendOrder"
 
-const materials = ["PLA пластик", "ABS пластик", "PETG пластик", "Нейлон (PA)", "Другое / не знаю"]
+const materials = ["PLA (любой вид)", "PETG (любой вид)", "ABS", "PC (поликарбонат)", "TPU (любой вид)", "Другое / не знаю"]
 const colors = ["Белый", "Чёрный", "Серый", "Красный", "Синий", "Жёлтый", "Прозрачный", "Другой / не важно"]
 
 export default function PrintOrderPage() {
@@ -165,7 +165,6 @@ export default function PrintOrderPage() {
                   </span>
                   <input
                     type="file"
-                    accept=".stl,.obj,.step,.stp,.3mf,.zip,.rar,.7z,.tar,.gz"
                     className="hidden"
                     onChange={(e) => {
                       const f = e.target.files?.[0] || null

@@ -1,3 +1,5 @@
+import { strFromU8, unzipSync } from "fflate"
+
 export interface MeshStats {
   volumeMm3: number
   areaMm2: number
@@ -40,7 +42,9 @@ function parseStl(buf: ArrayBuffer): Tri[] {
   const view = new DataView(buf)
   if (buf.byteLength > 84) {
     const n = view.getUint32(80, true)
-    if (84 + n * 50 === buf.byteLength) {
+    const head = new TextDecoder().decode(new Uint8Array(buf, 0, Math.min(256, buf.byteLength)))
+    const looksAscii = head.trimStart().startsWith("solid") && /facet|vertex/.test(head)
+    if (!looksAscii && 84 + n * 50 <= buf.byteLength) {
       const tris: Tri[] = []
       for (let i = 0; i < n; i++) {
         const o = 84 + i * 50 + 12
@@ -87,9 +91,59 @@ function parseObj(buf: ArrayBuffer): Tri[] {
   return tris
 }
 
+function parse3mf(buf: ArrayBuffer): Tri[] {
+  const files = unzipSync(new Uint8Array(buf))
+  const tris: Tri[] = []
+  for (const name of Object.keys(files)) {
+    if (!name.toLowerCase().endsWith(".model")) continue
+    const doc = new DOMParser().parseFromString(strFromU8(files[name]), "application/xml")
+    const meshes = Array.from(doc.getElementsByTagNameNS("*", "mesh"))
+    for (const mesh of meshes) {
+      const verts: number[][] = []
+      Array.from(mesh.getElementsByTagNameNS("*", "vertex")).forEach((v) => {
+        verts.push([
+          parseFloat(v.getAttribute("x") || "0"),
+          parseFloat(v.getAttribute("y") || "0"),
+          parseFloat(v.getAttribute("z") || "0"),
+        ])
+      })
+      Array.from(mesh.getElementsByTagNameNS("*", "triangle")).forEach((t) => {
+        const a = verts[Number(t.getAttribute("v1"))]
+        const b = verts[Number(t.getAttribute("v2"))]
+        const c = verts[Number(t.getAttribute("v3"))]
+        if (a && b && c) tris.push([...a, ...b, ...c] as Tri)
+      })
+    }
+  }
+  return tris
+}
+
+const MODEL_EXT = ["stl", "obj", "3mf"]
+
+function parseByExt(ext: string, buf: ArrayBuffer): Tri[] {
+  if (ext === "obj") return parseObj(buf)
+  if (ext === "3mf") return parse3mf(buf)
+  return parseStl(buf)
+}
+
 export async function analyzeModel(file: File): Promise<MeshStats> {
   const buf = await file.arrayBuffer()
-  const ext = file.name.split(".").pop()?.toLowerCase()
-  const tris = ext === "obj" ? parseObj(buf) : parseStl(buf)
-  return compute(tris)
+  const ext = file.name.split(".").pop()?.toLowerCase() || ""
+  if (MODEL_EXT.includes(ext)) return compute(parseByExt(ext, buf))
+  if (ext === "zip") {
+    const files = unzipSync(new Uint8Array(buf))
+    const all: Tri[] = []
+    for (const [name, data] of Object.entries(files)) {
+      const e = name.split(".").pop()?.toLowerCase() || ""
+      if (!MODEL_EXT.includes(e)) continue
+      const copy = data.buffer.slice(data.byteOffset, data.byteOffset + data.byteLength) as ArrayBuffer
+      try {
+        all.push(...parseByExt(e, copy))
+      } catch {
+        continue
+      }
+    }
+    return compute(all)
+  }
+  throw new Error("unsupported")
 }

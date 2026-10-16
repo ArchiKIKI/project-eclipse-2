@@ -2,7 +2,7 @@ import { useMemo, useState } from "react"
 import Icon from "@/components/ui/icon"
 import { toast } from "@/hooks/use-toast"
 import { analyzeModel, MeshStats } from "@/lib/meshAnalysis"
-import { MAX_BUILD_MM, MIN_PRINT_ORDER, printMaterials } from "@/lib/printPricing"
+import { FLOW_MM3_PER_SEC, MACHINE_HOUR_RATE, MAX_BUILD_MM, printMaterials, SETUP_HOURS } from "@/lib/printPricing"
 
 const fieldCls =
   "w-full px-4 py-2.5 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-[#1a1a1a] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-[#7A7FEE]"
@@ -36,7 +36,7 @@ export default function PrintCalculator() {
       setFileName("")
       toast({
         title: "Не удалось прочитать файл",
-        description: "Загрузите STL или OBJ либо введите вес детали вручную",
+        description: "Загрузите STL, 3MF, OBJ или ZIP либо введите вес детали вручную",
         variant: "destructive",
       })
     } finally {
@@ -55,9 +55,10 @@ export default function PrintCalculator() {
       weight = Number(manualWeight)
     }
     if (!weight) return null
-    const unit = Math.max(weight * material.pricePerGram, 0)
-    const total = Math.max(unit * quantity, MIN_PRINT_ORDER)
-    return { weight, total }
+    const hours = (weight / material.density) * 1000 / FLOW_MM3_PER_SEC / 3600
+    const materialCost = weight * material.pricePerGram * quantity
+    const machineCost = (hours * quantity + SETUP_HOURS) * MACHINE_HOUR_RATE
+    return { weight, hours, materialCost, machineCost, total: materialCost + machineCost }
   }, [stats, manualWeight, material, infill, quantity])
 
   const fits =
@@ -70,13 +71,13 @@ export default function PrintCalculator() {
         <div className="section-label">Калькулятор</div>
         <h2 className="text-black dark:text-white mb-3 max-w-xl">Рассчитайте стоимость печати</h2>
         <p className="text-gray-600 dark:text-gray-300 mb-8 max-w-xl">
-          Загрузите модель в формате STL или OBJ, и мы оценим вес и цену. Расчёт примерный, точную стоимость назовём после проверки файла.
+          Загрузите модель в формате STL, 3MF, OBJ или ZIP-архив с ними, и мы оценим вес и цену. Расчёт примерный, точную стоимость назовём после проверки файла.
         </p>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 max-w-5xl">
           <div className="lg:col-span-3 card p-6 space-y-5">
             <div>
-              <label className="block text-sm font-medium text-black dark:text-white mb-1.5">Файл модели (STL, OBJ)</label>
+              <label className="block text-sm font-medium text-black dark:text-white mb-1.5">Файл модели (STL, 3MF, OBJ или ZIP-архив)</label>
               <label className="flex items-center gap-3 px-4 py-3 rounded-lg border border-dashed border-gray-300 dark:border-gray-700 cursor-pointer hover:border-[#7A7FEE] transition-colors">
                 <Icon name={busy ? "Loader" : "Upload"} size={18} className="text-[#7A7FEE] flex-shrink-0" />
                 <span className="text-sm text-gray-600 dark:text-gray-300 truncate">
@@ -84,7 +85,6 @@ export default function PrintCalculator() {
                 </span>
                 <input
                   type="file"
-                  accept=".stl,.obj"
                   className="hidden"
                   onChange={(e) => {
                     handleFile(e.target.files?.[0] || null)
@@ -118,7 +118,7 @@ export default function PrintCalculator() {
                 <label className="block text-sm font-medium text-black dark:text-white mb-1.5">Материал</label>
                 <select value={materialId} onChange={(e) => setMaterialId(e.target.value)} className={fieldCls}>
                   {printMaterials.map((m) => (
-                    <option key={m.id} value={m.id}>{m.name}</option>
+                    <option key={m.id} value={m.id}>{m.name} — {m.pricePerGram} ₽/г</option>
                   ))}
                 </select>
               </div>
@@ -173,7 +173,9 @@ export default function PrintCalculator() {
                       Размер: {stats.size.map((v) => Math.round(v)).join(" × ")} мм
                     </li>
                   )}
-                  <li>Минимальный заказ: {MIN_PRINT_ORDER} ₽</li>
+                  <li>Время печати: ≈ {result.hours < 1 ? `${Math.round(result.hours * 60)} мин` : `${result.hours.toFixed(1)} ч`} на деталь</li>
+                  <li>Пластик: {Math.round(result.materialCost).toLocaleString("ru-RU")} ₽</li>
+                  <li>Работа принтера ({MACHINE_HOUR_RATE} ₽/ч): {Math.round(result.machineCost).toLocaleString("ru-RU")} ₽</li>
                 </ul>
                 {!fits && (
                   <p className="mt-4 text-sm text-red-600 dark:text-red-400">
